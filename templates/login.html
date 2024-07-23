@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TaskBox</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='appfavicon0.ico') }}">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1d201d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar {
+            background-color: #acab7b;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-bar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;; 
+            color: #fff; 
+        }
+
+        .top-bar .logo:hover {
+            color: #ffd700; /* Hover color */
+        }
+
+        .top-bar .nav-links {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar .nav-links a {
+            color: #ffd700;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .top-bar .nav-links a:hover {
+            background-color: #ffd700;
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 80px; 
+        }
+
+        .login-section {
+            text-align: center;
+        }
+
+        .login-section h2 {
+            color: #4caf50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .login-form input[type="email"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: #4caf50;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #45a049;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #4caf50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #45a049;
+        }
+
+        .flash-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #f44336;
+            font-size: 0.9rem;
+        }
+
+        .flash-danger {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">
+            <a href="{{ url_for('index') }}">TaskBox</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <section class="login-section">
+            <h2>Login to TaskBox</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form class="login-form" action="{{ url_for('login') }}" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p class="register-link">Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a></p>
+        </section>
+    </div>
+</body>
+</html>

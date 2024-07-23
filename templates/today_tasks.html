@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Today's Tasks
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="task-section">
+        <h2>Today's Tasks</h2>
+
+        <!-- Flash messages as notifications -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="notification {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Today's tasks list -->
+        <ul class="task-list">
+            {% if tasks %}
+                {% for task in tasks %}
+                    <li class="task-item">
+                        <span>{{ task.task | escape }}</span>
+                        <div class="task-actions">
+                            <form action="{{ url_for('complete_task', task_id=loop.index) }}" method="POST">
+                                <button class="complete-btn" type="submit">Complete</button>
+                            </form>
+                            <form action="{{ url_for('edit_task', task_id=loop.index) }}" method="GET">
+                                <button class="edit-btn" type="submit">Edit</button>
+                            </form>
+                            <form action="{{ url_for('delete_task', task_id=loop.index) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                <button class="delete-btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No tasks for today.</p>
+            {% endif %}
+        </ul>
+    </section>
+</div>
+{% endblock %}
