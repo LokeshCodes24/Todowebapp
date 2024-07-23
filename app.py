@@ -70,8 +70,7 @@ def task_manager():
 @app.route('/add_task', methods=['POST'])
 def add_task():
     task = request.form.get('task')
-    # Assuming we capture today's tasks using a due date of 'today'
-    due_date = 'today'  # For simplicity, 'today' is used to identify today's tasks.
+    due_date = 'today' 
     if task:
         tasks.append({'task': task, 'due_date': due_date, 'completed': False})
         flash('Task added successfully!', 'success')
